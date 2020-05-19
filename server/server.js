@@ -2,7 +2,6 @@ const express = require("express");
 const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
-require("dotenv").config();
 
 app.use(logger("dev"));
 // Define middleware here
@@ -19,12 +18,6 @@ if (process.env.NODE_ENV === "production") {
 // Define any API routes before this runs
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "./client/build/index.html"));
-});
-
-//Conneting to mongoose DB "need local DBname"
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/<DBName>", {
-    useNewUrlParser: true,
-    useFindAndModify: false
 });
 
 app.listen(PORT, () => {
