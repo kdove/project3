@@ -1,10 +1,12 @@
-import axios from "axios";
+const axios = require("axios");
+console.log(process.env.FINICITY_APP_KEY);
+
 
 //export all these api call functions
-export default {
+module.exports = {
 
     //this first method will authenticate our connection to finicity and return a token we can use to make actual calls
-    finicityAuthenticate: function() {
+    finicityAuthenticate: function(req, res) {
         return axios({
             method: "post", 
             url: "https://api.finicity.com/aggregation/v2/partners/authentication",
@@ -21,6 +23,8 @@ export default {
             }
           }).catch(error => {
               console.log(error);
+          }).then(response => {
+            res.json(response.data);
           })
           //Should return a token:
           //{

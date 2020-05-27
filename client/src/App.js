@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-const testRoute = require("./routes/apiRoutes");
+import api from "./api";
+//import { response } from "express";
 
 function App() {
   return (
@@ -13,15 +14,16 @@ function App() {
       <p className="App-intro">
         To get started, edit <code>src/App.js</code> and save to reload.
       </p>
-      <button>Test Button</button>
+      <button onClick = {click}>Test Button</button>
     </div>
   );
 }
 
 function click() {
-  testRoute.default.finicityAuthenticate(function(res) {
-    alert(res);
-  })
-}
+  api.authenticate().then(response => {
+    console.log(response);
+    console.log(response.token);
+  });
+};
 
 export default App;
