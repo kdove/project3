@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import api from "./api";
+//import { response } from "express";
 
 function App() {
   return (
@@ -12,9 +14,16 @@ function App() {
       <p className="App-intro">
         To get started, edit <code>src/App.js</code> and save to reload.
       </p>
+      <button onClick = {click}>Test Button</button>
     </div>
   );
 }
 
+function click() {
+  api.authenticate().then(response => {
+    console.log(response);
+    console.log(response.token);
+  });
+};
 
 export default App;
