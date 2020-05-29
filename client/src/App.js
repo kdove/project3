@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import api from "./api";
-//import { response } from "express";
 
 function App() {
   return (
@@ -14,16 +13,32 @@ function App() {
       <p className="App-intro">
         To get started, edit <code>src/App.js</code> and save to reload.
       </p>
-      <button onClick = {click}>Test Button</button>
+      <button onClick = {createToken}>Create new Token</button>
+      <br/>
+      <input type="text" id="username" /> <button onClick={createTestUser}>Create Test User</button>
     </div>
   );
 }
-
-function click() {
+let currentToken = null;
+function createToken() {
   api.authenticate().then(response => {
     console.log(response);
     console.log(response.token);
+    alert(response.token);
+    currentToken = response.token;
   });
 };
+
+function createTestUser(){
+  const $text = document.getElementById("username").value;
+  //alert($text);
+  api.createTestUser({
+    username: $text,
+    token: currentToken
+  }).then(response => {
+    console.log(response);
+    alert(`id: ${response.id}, username: ${response.username}, createDate: ${response.createdDate}`);
+  });
+}
 
 export default App;

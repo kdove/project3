@@ -52,20 +52,22 @@ module.exports = {
             }
         }).catch(error => {
             console.log(error);
+        }).then(response => {
+            res.json(response.data);
         });
         //should return a customer object
     },
 
     //finicity create test consumer is free however, and can only register accounts with FinBank institutions
     //does require authentication
-    finicityCreateTestCustomer: function(token, username) {
+    finicityCreateTestCustomer: function(req, res) {
         return axios({
             method: "post",
             url: "https://api.finicity.com/aggregation/v1/customers/testing",
             //data into finicity servers
             //just a username this time
             data: {
-                "username": username
+                "username": req.body.data.username
             },
             //our headers
             //Accept, Content-type, app-key, token, etc.
@@ -73,10 +75,12 @@ module.exports = {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
                 "Finicity-App-Key": process.env.FINICITY_APP_KEY,
-                "Finicity-App-Token": token
+                "Finicity-App-Token": req.body.data.token
             }
         }).catch(error => {
             console.log(error);
+        }).then(response => {
+            res.json(response.data);
         });
         //should return a test customer object
         //{
@@ -84,5 +88,24 @@ module.exports = {
             //"username": "the entered username"
             //"createdDate": "The date the test user was created"
         //}
+    },
+    //completely removes a customer from finicity's system, will remove the customer's accounts and transactions
+    //use with great caution.
+    //does require an authentication token
+    finicityDeleteCustomer: function(token, customerId) {
+        return axios({
+            method: "delete",
+            url: "https://api.finicity.com/aggregation/v1/customers/testing",
+            //does not require a data parameter
+            data: null,
+            //our headers are the finicity app key and the finicity app token
+            headers: {
+                "Finicity-App-Token": token,
+                "Finicity-App-Key": process.env.FINICITY_APP_KEY
+            }
+        }).catch(error => {
+            console.log(error);
+        });
+        //this method will not actually return anything if it works
     }
 };
