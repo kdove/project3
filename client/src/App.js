@@ -16,6 +16,8 @@ function App() {
       <button onClick = {createToken}>Create new Token</button>
       <br/>
       <input type="text" id="username" /> <button onClick={createTestUser}>Create Test User</button>
+      <br/>
+      <button onClick = {getStatment}>The get statment button, press only after hitting authenticate</button>
     </div>
   );
 }
@@ -29,7 +31,7 @@ function createToken() {
   });
 };
 
-function createTestUser(){
+function createTestUser() {
   const $text = document.getElementById("username").value;
   //alert($text);
   api.createTestUser({
@@ -38,6 +40,19 @@ function createTestUser(){
   }).then(response => {
     console.log(response);
     alert(`id: ${response.id}, username: ${response.username}, createDate: ${response.createdDate}`);
+  });
+}
+
+function getStatment() {
+  //mostly hard coded data for testing purposes
+  const info = {
+    token: currentToken,
+    customerId: 1006445022,
+    accountId: 1019548601
+  }
+  api.getStatement(info).then(response => {
+    //TODO
+    //somehow save the pdf response here
   });
 }
 
