@@ -15,11 +15,15 @@ function App() {
       </p>
       <button onClick = {createToken}>Create new Token</button>
       <br/>
+      <br/>
       <input type="text" id="username" /> <button onClick={createTestUser}>Create Test User</button>
+      <br/>
       <br/>
       <button onClick = {getStatment}>The get statment button, press only after hitting authenticate</button>
       <br/>
+      <br/>
       <button onClick = {getAccounts}>console log accounts, hit after authenticate</button>
+      <br/>
       <br/>
       <input type="text" name="firstName" id="firstName"/> <label htmlFor="firstName">First Name</label>
       <br/>
@@ -47,6 +51,10 @@ function App() {
       <br/>
       <input type="text" name="customerId" id="customerId"/> <label htmlFor="customerId">Customer ID number</label>
       <button onClick = {createConsumer}>Create Consumer button</button>
+      <br/>
+      <br/>
+      <input type="text" name="deleteCustomerId" id="deleteCustomerId"/> <label htmlFor="deleteCustomerId">Customer ID to delete</label>
+      <button onClick = {deleteCustomer}>Delete customer</button>
     </div>
   );
 }
@@ -99,6 +107,17 @@ function createTestUser() {
     alert(`id: ${response.id}, username: ${response.username}, createDate: ${response.createdDate}`);
   });
 };
+
+function deleteCustomer() {
+  const info = {
+    token: currentToken,
+    customerId: document.getElementById("deleteCustomerId").value
+  }
+
+  api.deleteUser(info).catch(error => {
+    console.log(error);
+  });
+}
 
 function getAccounts() {
   const info = {
