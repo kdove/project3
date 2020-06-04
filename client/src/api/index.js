@@ -29,6 +29,22 @@ export default {
         });
     },
 
+    //sends a post request to createConsumer route
+    //creates a consumer account for our customer account on finicity
+    createConsumer: function(userData) {
+        return axios({
+            method: "post",
+            url: "/createConsumer",
+            data: {
+                data: userData
+            }
+        }).catch(error => {
+            console.log(error);
+        }).then(response => {
+            return response.data;
+        });
+    },
+
     //sends a delete request our deleteCustomer route
     //deletes the customer from the finicity database based on which customer id we send
     deleteUser: function(userData) {
@@ -48,7 +64,7 @@ export default {
     //uses the customer id#
     getAccounts: function(userData) {
         return axios({
-            method: "get",
+            method: "post",
             url: "/getAccounts",
             data: {
                 data: userData
@@ -56,7 +72,7 @@ export default {
         }).catch(error => {
             console.log(error);
         }).then(response => {
-            return response.data;
+            return JSON.parse(response.data);
         });
     },
 
@@ -83,8 +99,42 @@ export default {
     //uses a token among other parameters
     getCustomers: function(userData) {
         return axios({
-            method: "GET",
+            method: "post",
             url: "/getCustomers",
+            data: {
+                data: userData
+            }
+        }).catch(error => {
+            console.log(error);
+        }).then(response => {
+            return JSON.parse(response.data);
+        });
+    },
+
+    //sends a request to the getCustomer route
+    //returns a singular customer when sent with the customer's ID
+    //uses token authentication
+    getCustomer: function(userData) {
+        return axios({
+            method: "post",
+            url: "/getCustomer",
+            data: {
+                data: userData
+            }
+        }).catch(error => {
+            console.log(error);
+        }).then(response => {
+            return JSON.parse(response.data);
+        });
+    },
+
+    //sends a request for a link to our generateUrl route
+    //returns a link for our iframe to display so our user can connect bank accounts to their finicity profile
+    //uses token authentication
+    generateUrl: function(userData) {
+        return axios({
+            method: "POST",
+            url: "/generateUrl",
             data: {
                 data: userData
             }
