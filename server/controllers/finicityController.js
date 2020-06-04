@@ -223,6 +223,30 @@ module.exports = {
     //requires a token authentication
     //returns an object containing an array "customers" with customer objects in it
     finicityGetCustomers: function(req, res) {
+        //options to pass into our call
+        const options = {
+            "method": "GET",
+            "url": "https://api.finicity.com/aggregation/v1/customers",
+            headers: {
+                "Finicity-App-Token": req.body.data.token,
+                "Finicity-App-Key": process.env.FINICITY_APP_KEY,
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                //"search": "searchvalue"
+                //"username": "customerusername"
+                "start": 1,
+                "limit": 25,
+                "type": "testing"
+                //"type:" "active"
+            })
+        }
+        //our request
+        request(options, function(error, response) {
+            if(error) console.log(error);
+            res.json(response.body);
+        });
+        /*
         return axios({
             method: "get",
             url: "https://api.finicity.com/aggregation/v1/customers",
@@ -230,14 +254,7 @@ module.exports = {
             //we'll hard code this to return all for now, but in the future
             //we could pass in some searching parameters to find specific customers
             //enrolled by us
-            params: {
-                //"search": "searchvalue"
-                //"username": "customerusername"
-                "start": 1,
-                "limit": 25,
-                "type": test
-                //"type:" "active"
-            },
+            params: ,
             //headers are our standard finicity app key and tokens
             headers: {
                 "Finicity-App-Token": req.body.data.token,
@@ -249,5 +266,6 @@ module.exports = {
         }).then(response => {
             res.json(response.data);
         })
+        */
     }
 };

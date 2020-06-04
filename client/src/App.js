@@ -7,54 +7,56 @@ function App() {
   return (
     <div className="App">
       <div className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h2>Welcome to React</h2>
+        <p className="App-intro">
+          This is a list of test functions to make sure the back end of the application is working
+        </p>
       </div>
-      <p className="App-intro">
-        To get started, edit <code>src/App.js</code> and save to reload.
-      </p>
-      <button onClick = {createToken}>Create new Token</button>
-      <br/>
-      <br/>
+      <br />
+      <button onClick={createToken}>Create new Token</button>
+      <br />
+      <br />
       <input type="text" id="username" /> <button onClick={createTestUser}>Create Test User</button>
-      <br/>
-      <br/>
-      <button onClick = {getStatment}>The get statment button, press only after hitting authenticate</button>
-      <br/>
-      <br/>
-      <button onClick = {getAccounts}>console log accounts, hit after authenticate</button>
-      <br/>
-      <br/>
-      <input type="text" name="firstName" id="firstName"/> <label htmlFor="firstName">First Name</label>
-      <br/>
-      <input type="text" name="lastName" id="lastName"/> <label htmlFor="lastName">Last Name</label>
-      <br/>
-      <input type="text" name="address" id="address"/> <label htmlFor="address">Street Address</label>
-      <br/>
-      <input type="text" name="city" id="city"/> <label htmlFor="city">City</label>
-      <br/>
-      <input type="text" name="state" id="state"/> <label htmlFor="state">State (two letters)</label>
-      <br/>
-      <input type="text" name="zip" id="zip"/> <label htmlFor="zip">Zip Code (5 numbers)</label>
-      <br/>
-      <input type="text" name="phone" id="phone"/> <label htmlFor="phone">Phone Number (10 numbers)</label>
-      <br/>
-      <input type="text" name="ssn" id="ssn"/> <label htmlFor="ssn">SSN (9 numbers)</label>
-      <br/>
-      <input type="text" name="birthdayYear" id="birthdayYear"/> <label htmlFor="birthdayYear">Year of Birth (4 numbers)</label>
-      <br/>
-      <input type="text" name="birthdayMonth" id="birthdayMonth"/> <label htmlFor="birthdayMonth">Month of Birth (2 numbers)</label>
-      <br/>
-      <input type="text" name="birthdayDay" id="birthdayDay"/> <label htmlFor="birthdayDay">Day of Birth (2 numbers)</label>
-      <br/>
-      <input type="text" name="email" id="email"/> <label htmlFor="email">Email address</label>
-      <br/>
-      <input type="text" name="customerId" id="customerId"/> <label htmlFor="customerId">Customer ID number</label>
-      <button onClick = {createConsumer}>Create Consumer button</button>
-      <br/>
-      <br/>
-      <input type="text" name="deleteCustomerId" id="deleteCustomerId"/> <label htmlFor="deleteCustomerId">Customer ID to delete</label>
-      <button onClick = {deleteCustomer}>Delete customer</button>
+      <br />
+      <br />
+      <button onClick={getStatment}>The get statment button, press only after hitting authenticate</button>
+      <br />
+      <br />
+      <button onClick={getAccounts}>console log accounts, hit after authenticate</button>
+      <br />
+      <br />
+      <input type="text" name="firstName" id="firstName" /> <label htmlFor="firstName">First Name</label>
+      <br />
+      <input type="text" name="lastName" id="lastName" /> <label htmlFor="lastName">Last Name</label>
+      <br />
+      <input type="text" name="address" id="address" /> <label htmlFor="address">Street Address</label>
+      <br />
+      <input type="text" name="city" id="city" /> <label htmlFor="city">City</label>
+      <br />
+      <input type="text" name="state" id="state" /> <label htmlFor="state">State (two letters)</label>
+      <br />
+      <input type="text" name="zip" id="zip" /> <label htmlFor="zip">Zip Code (5 numbers)</label>
+      <br />
+      <input type="text" name="phone" id="phone" /> <label htmlFor="phone">Phone Number (10 numbers)</label>
+      <br />
+      <input type="text" name="ssn" id="ssn" /> <label htmlFor="ssn">SSN (9 numbers)</label>
+      <br />
+      <input type="text" name="birthdayYear" id="birthdayYear" /> <label htmlFor="birthdayYear">Year of Birth (4 numbers)</label>
+      <br />
+      <input type="text" name="birthdayMonth" id="birthdayMonth" /> <label htmlFor="birthdayMonth">Month of Birth (2 numbers)</label>
+      <br />
+      <input type="text" name="birthdayDay" id="birthdayDay" /> <label htmlFor="birthdayDay">Day of Birth (2 numbers)</label>
+      <br />
+      <input type="text" name="email" id="email" /> <label htmlFor="email">Email address</label>
+      <br />
+      <input type="text" name="customerId" id="customerId" /> <label htmlFor="customerId">Customer ID number</label>
+      <button onClick={createConsumer}>Create Consumer button</button>
+      <br />
+      <br />
+      <input type="text" name="deleteCustomerId" id="deleteCustomerId" /> <label htmlFor="deleteCustomerId">Customer ID to delete</label>
+      <button onClick={deleteCustomer}>Delete customer</button>
+      <br />
+      <br />
+      <button onClick={getCustomers}>Console List of customers</button>
     </div>
   );
 }
@@ -68,6 +70,7 @@ function createToken() {
   });
 };
 
+//test function for creating consumers
 function createConsumer() {
   const info = {
     token: currentToken,
@@ -96,6 +99,20 @@ function createConsumer() {
   });
 };
 
+//test function for getting an object that contains an array of all of our listed customers
+function getCustomers() {
+  const info = {
+    token: currentToken
+  };
+
+  api.getCustomers(info).catch(error => {
+    console.log(error);
+  }).then(response => {
+    console.log(response);
+  });
+};
+
+//test function that creates a test user using the username box
 function createTestUser() {
   const $text = document.getElementById("username").value;
   //alert($text);

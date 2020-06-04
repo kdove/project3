@@ -99,7 +99,7 @@ export default {
     //uses a token among other parameters
     getCustomers: function(userData) {
         return axios({
-            method: "GET",
+            method: "post",
             url: "/getCustomers",
             data: {
                 data: userData

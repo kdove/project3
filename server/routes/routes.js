@@ -36,6 +36,40 @@ router.route("/createTestCustomer").post(finicityController.finicityCreateTestCu
 }
 */
 
+//create routes that will return one customer based on what we sent in. Or a route that will return all customers that 
+//are linked to our finicity key
+router.route("/getCustomers").post(finicityController.finicityGetCustomers);
+/* 
+  response example
+  {
+      "found": 10,
+      "displaying": 10,
+      "moreAvailable": false,
+      "customers": [
+          {
+              "id": "1006445022",
+              "username": "testUsername",
+              "type": "testing",
+              "createdDate": "1590026873"
+          },
+          {
+              "id": "1006445717",
+              "username": "josiah",
+              "type": "testing",
+              "createdDate": "1590027773"
+          },
+          {
+              "id": "1006901779",
+              "username": "testing",
+              "type": "testing",
+              "createdDate": "1590717579"
+          },
+          +3 more...
+          don't want the comment to be too long
+      ]
+  }
+*/
+
 //create consumer for a given customer
 //requires a customerId, firstName, lastName, address, state, zip, phone, ssn, birthday, and email
 //requires a token from authentication
