@@ -69,6 +69,19 @@ router.route("/getCustomers").post(finicityController.finicityGetCustomers);
       ]
   }
 */
+//the get singular customer route:
+router.route("/getCustomer").post(finicityController.finicityGetCustomer);
+/*
+  response example:
+  {
+    "id": "1005061234",
+    "username": "customerusername1",
+    "firstName": "John",
+    "lastName": "Smith",
+    "type": "active",
+    "createdDate": "1588305190"
+  }
+*/
 
 //create consumer for a given customer
 //requires a customerId, firstName, lastName, address, state, zip, phone, ssn, birthday, and email
@@ -100,5 +113,16 @@ router.route("/getAccounts").post(finicityController.finicityGetCustomerAccounts
 router.route("/getStatement").post(finicityController.finicityGetAccountStatement);
 /*
 returns a pdf, no json syntex
+*/
+
+//this route will return a link to connect accounts for our user to finicity
+//requires authentication token
+//will stay active for two hours, might want to create a new token for this in the future
+router.route("/generateUrl").post(finicityController.finicityCreateUrl);
+/*
+returns:
+{
+  "link": https://connect.finicity.com?.........
+}
 */
 module.exports = router;

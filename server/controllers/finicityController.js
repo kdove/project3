@@ -267,5 +267,51 @@ module.exports = {
             res.json(response.data);
         })
         */
+    },
+
+    //function that will return a single searched for customer
+    finicityGetCustomer: function(req, res) {
+        const options = {
+            "method": "GET",
+            "url": `https://api.finicity.com/aggregation/v1/customers/${req.body.data.customerId}`,
+            headers: {
+                "Finicity-App-Token": req.body.data.token,
+                "Finicity-App-Key": process.env.FINICITY_APP_KEY,
+                "Accept": "application/json"
+            }
+        }
+        //our request
+        request(options, function(error, response) {
+            if(error) console.log(error);
+            res.json(response.body);
+        });
+    },
+
+    //function that will return a url to link customer's accounts
+    //requires authentication, customerId, and consumerId,
+    //will return a litteral url
+    finicityCreateUrl: function(req, res) {
+        console.log("Url request sent");
+        return axios({
+            method: "post",
+            url: "https://api.finicity.com/connect/v1/generate",
+            data: {
+                "partnerId": process.env.PARTNER_ID,
+                "customerId": req.body.data.customerId,
+                "consumerId": req.body.data.consumerId,
+                "type": "voa"
+            },
+            headers: {
+                "Accept": "application/json",
+                "Finicity-App-Key": process.env.FINICITY_APP_KEY,
+                "Finicity-App-Token": req.body.data.token,
+                "Content-Type": "application/json"
+            }
+        }).catch(error => {
+            console.log(error);
+        }).then(response => {
+            console.log(response.data);
+            res.json(response.data);
+        });
     }
 };

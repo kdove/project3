@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import api from "./api";
 
@@ -57,9 +56,24 @@ function App() {
       <br />
       <br />
       <button onClick={getCustomers}>Console List of customers</button>
+      <br/>
+      <br/>
+      <input type="text" name="customerIdSearch" id="customerIdSearch"/> <label htmlFor="customerIdSearch">customerIdSearch to search</label>
+      <button onClick = {getCustomer}>Look up customer by Id</button>
+      <br/>
+      <br/>
+      <h3>Generate url</h3>
+      <br/>
+      <input type="text" name="linkCustomer" id="linkCustomer"/> <label htmlFor="linkCustomer">Customer ID</label>
+      <br/>
+      <input type="text" name="linkConsumer" id="linkConsumer"/> <label htmlFor="linkConsumer">Consumer ID</label>
+      <br/>
+      <button onClick = {generateUrl}>generate link</button>
     </div>
   );
 }
+//test function below will generate an authentication link
+//and store it in the current token variable
 let currentToken = null;
 function createToken() {
   api.authenticate().then(response => {
@@ -67,6 +81,23 @@ function createToken() {
     console.log(response.token);
     alert(response.token);
     currentToken = response.token;
+  });
+};
+
+//test function will generate a url to connect accounts
+function generateUrl() {
+  const info = {
+    token: currentToken,
+    customerId: document.getElementById("linkCustomer").value,
+    consumerId: document.getElementById("linkConsumer").value
+  }
+
+  api.generateUrl(info)
+  .catch(error => {
+    console.log(error);
+  }).then(response => {
+    console.log(response);
+    alert("Our generated link: " + response.link);
   });
 };
 
@@ -112,6 +143,20 @@ function getCustomers() {
   });
 };
 
+//test function to return a singular customer based on the passed customer ID
+function getCustomer() {
+  const info = {
+    token: currentToken,
+    customerId: document.getElementById("customerIdSearch").value
+  };
+
+  api.getCustomer(info)
+  .then(response => {
+    console.log(response);
+    alert(`customer found: ${response.id}, username: ${response.username}, createDate: ${response.createdDate}, type: ${response.type}`);
+  });
+};
+
 //test function that creates a test user using the username box
 function createTestUser() {
   const $text = document.getElementById("username").value;
@@ -125,6 +170,7 @@ function createTestUser() {
   });
 };
 
+//test function to delete customer by customer ID
 function deleteCustomer() {
   const info = {
     token: currentToken,
@@ -136,6 +182,7 @@ function deleteCustomer() {
   });
 }
 
+//test function to return all accounts associated with a given customer id
 function getAccounts() {
   const info = {
     token: currentToken,
@@ -148,6 +195,7 @@ function getAccounts() {
   })
 }
 
+//test function to return a statment for an account ID linked to a customer's ID
 function getStatment() {
   //mostly hard coded data for testing purposes
   const info = {

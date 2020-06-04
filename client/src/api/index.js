@@ -72,7 +72,7 @@ export default {
         }).catch(error => {
             console.log(error);
         }).then(response => {
-            return response.data;
+            return JSON.parse(response.data);
         });
     },
 
@@ -101,6 +101,40 @@ export default {
         return axios({
             method: "post",
             url: "/getCustomers",
+            data: {
+                data: userData
+            }
+        }).catch(error => {
+            console.log(error);
+        }).then(response => {
+            return JSON.parse(response.data);
+        });
+    },
+
+    //sends a request to the getCustomer route
+    //returns a singular customer when sent with the customer's ID
+    //uses token authentication
+    getCustomer: function(userData) {
+        return axios({
+            method: "post",
+            url: "/getCustomer",
+            data: {
+                data: userData
+            }
+        }).catch(error => {
+            console.log(error);
+        }).then(response => {
+            return JSON.parse(response.data);
+        });
+    },
+
+    //sends a request for a link to our generateUrl route
+    //returns a link for our iframe to display so our user can connect bank accounts to their finicity profile
+    //uses token authentication
+    generateUrl: function(userData) {
+        return axios({
+            method: "POST",
+            url: "/generateUrl",
             data: {
                 data: userData
             }
