@@ -29,6 +29,22 @@ export default {
         });
     },
 
+    //sends a post request to createConsumer route
+    //creates a consumer account for our customer account on finicity
+    createConsumer: function(userData) {
+        return axios({
+            method: "post",
+            url: "/createConsumer",
+            data: {
+                data: userData
+            }
+        }).catch(error => {
+            console.log(error);
+        }).then(response => {
+            return response.data;
+        });
+    },
+
     //sends a delete request our deleteCustomer route
     //deletes the customer from the finicity database based on which customer id we send
     deleteUser: function(userData) {
@@ -48,7 +64,7 @@ export default {
     //uses the customer id#
     getAccounts: function(userData) {
         return axios({
-            method: "get",
+            method: "post",
             url: "/getAccounts",
             data: {
                 data: userData

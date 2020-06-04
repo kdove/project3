@@ -25,6 +25,7 @@
     "follow-redirects": "^1.11.0",
     "fs": "0.0.1-security",
     "if-env": "^1.0.4",
-    "mongoose": "^5.9.15"
+    "mongoose": "^5.9.15",
+    "request": "^2.88.2"
   }
 }

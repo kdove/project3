@@ -1,4 +1,10 @@
+//for our post requests, since axios is easy
 const axios = require("axios");
+//for our get requests, since axios does not support sending objects on a get request
+//though some testing in finicity's api via postman has reveiled that sending a post request instead might still work
+//I am at an impasse as to what best practice is to be used here, on one hand I am loading in an entire new library package
+//to do simple get requests, on the other hand, get requests through post requests are bad practice apparently.
+const request = require("request");
 console.log(process.env.FINICITY_APP_KEY);
 
 
@@ -33,22 +39,22 @@ module.exports = {
     },
 
     //create customer will use the create customer api route
-    finicityCreateCustomer: function(token, username, firstName, lastName) {
+    finicityCreateCustomer: function(req, res) {
         return axios({
             method: "post",
             url: "https://api.finicity.com/aggregation/v1/customers/active",
             //data of customer passed through parameters
             data: {
-                "username": username,
-                "firstName": firstName,
-                "lastName": lastName
+                "username": req.body.data.username,
+                "firstName": req.body.data.firstName,
+                "lastName": req.body.data.lastName
             },
             //headers will contain our app token passed in, and the app key we already know
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
                 "Finicity-App-Key": process.env.FINICITY_APP_KEY,
-                "Finicity-App-Token": token
+                "Finicity-App-Token": req.body.data.token
             }
         }).catch(error => {
             console.log(error);
@@ -96,36 +102,39 @@ module.exports = {
     //they are so if the customer deletes or deactivates their account, they can link the same information to a new account
     //requires a token authentication
     finicityCreateConsumer: function(req, res) {
+        console.log(req.body.data);
         return axios({
             method: "post",
             url: `https://api.finicity.com/decisioning/v1/customers/${req.body.data.customerId}/consumer`,
             data: {
                 //data required is:
                 //firstName
-                "firstName": req.data.firstName,
+                "firstName": req.body.data.firstName,
                 //lastName
-                "lastName": req.data.lastName,
+                "lastName": req.body.data.lastName,
                 //address
-                "address": req.data.address,
+                "address": req.body.data.address,
+                //city
+                "city": req.body.data.city,
                 //state
-                "state": req.body.state,
+                "state": req.body.data.state,
                 //zip(5 numbers)
-                "zip": req.body.zip,
+                "zip": req.body.data.zip,
                 //phone(10 numbers)
-                "phone": req.body.phone,
+                "phone": req.body.data.phone,
                 //ssn(9 numbers)
-                "ssn": req.body.ssn,
+                "ssn": req.body.data.ssn,
                 //birthday as an object (year, month, day) in numbers
-                "birthday": req.body.birthday,
+                "birthday": req.body.data.birthday,
                 //email
-                "email": req.body.email
+                "email": req.body.data.email
             },
             //headers are:
             //the token,
             //the app key,
             //accept and content-type
             headers: {
-                "Finicity-App-Token": req.body.token,
+                "Finicity-App-Token": req.body.data.token,
                 "Finicity-App-Key": process.env.FINICITY_APP_KEY,
                 "Accept": "application/json",
                 "Content-Type": "application/json"
@@ -160,24 +169,26 @@ module.exports = {
     //this will return a full array of the given user's accounts
     //requires a token authentication
     //requires the user's id#
+    //using the request library instead of the axios library since it will support sending a body and headers like what the finicity api wants
     finicityGetCustomerAccounts: function(req, res) {
-        return axios({
-            method: "get",
-            url: `https://api.finicity.com/aggregation/v1/customers/${req.body.data.customerId}/accounts`,
-            //just needs a status of pending sent as data
-            data: {
-                "status": "pending"
-            },
-            //headers include the finicity app key and current token
-            headers: {
+        console.log(req.body);
+        //we'll load in our options here, this will allow us to pass it in as one parameter to the call
+        const options = {
+            "method": "GET",
+            "url": `https://api.finicity.com/aggregation/v1/customers/${req.body.data.customerId}/accounts`,
+            "headers": {
                 "Finicity-App-Token": req.body.data.token,
                 "Finicity-App-Key": process.env.FINICITY_APP_KEY,
-                "Accept": "application/json"
-            }
-        }).catch(error => {
-            console.log(error);
-        }).then(response => {
-            res.json(response.data);
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({"status": "pending"})
+        };
+
+        //our call request
+        request(options, function(error, response) {
+            if(error) console.log(error);
+            res.json(response.body);
         });
     },
     
@@ -189,7 +200,7 @@ module.exports = {
         return axios({
             method: "get",
             url: `https://api.finicity.com/aggregation/v1/customers/${req.body.data.customerId}/accounts/${req.body.data.accountId}/statement`,
-            data: {
+            params: {
                 "index": 1
             },
             //headers are:
@@ -200,7 +211,7 @@ module.exports = {
                 "Finicity-App-Token": req.body.data.token,
                 "Finicity-App-Key": process.env.FINICITY_APP_KEY,
                 "Accept": "application/pdf, application/json"
-            }
+            },
         }).catch(error => {
             console.log(error);
         }).then(response => {
@@ -219,7 +230,7 @@ module.exports = {
             //we'll hard code this to return all for now, but in the future
             //we could pass in some searching parameters to find specific customers
             //enrolled by us
-            data: {
+            params: {
                 //"search": "searchvalue"
                 //"username": "customerusername"
                 "start": 1,
