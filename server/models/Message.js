@@ -19,10 +19,10 @@ const MessageSchema = new Schema({
         type: String,
         required: true
     },
-    //sender is the person who has sent the message
-    sender: {
-        type: String,
-        required: true
+    // refers to the user who created the message. refers to "User" model
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }
 });
 

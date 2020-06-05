@@ -19,7 +19,17 @@ const userSchema = new mongoose.Schema({
     created: {
         type: Date,
         default: Date.now
-    }
+    },
+    // refrencing the id of the message not the actual message. refers to the "Message" model
+    messages: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Message'
+    }],
+    // refrencing the id of the PDF file not the actual PDF file. refers to the "Statment" model
+    statement: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Statement'
+    }]
 });
 
 //finalize our model schema
