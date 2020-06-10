@@ -17,21 +17,21 @@ app.use(express.json());
 
 // Load routes
 const routes = require("./routes/routes");
-const authRouter = require('./routes/auth.route')
-const userRouter = require('./routes/user.route')
+//const authRouter = require('./routes/auth.route')
+//const userRouter = require('./routes/user.route')
 
 
 // Define API routes here
 app.use(routes);
-app.use('/api', authRouter)
-app.use('/api', userRouter)
+//app.use('/api', authRouter)
+//app.use('/api', userRouter)
 
-app.use((req, res, next) => {
-  res.status(404).json({
-      success: false,
-      msg: "Page not founded"
-  })
-})
+// app.use((req, res, next) => {
+//   res.status(404).json({
+//       success: false,
+//       msg: "Page not founded"
+//   })
+// })
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {

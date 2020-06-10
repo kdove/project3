@@ -201,22 +201,22 @@ module.exports = {
         //loading our information to send in a request here
         var options = {
             'method': 'GET',
-            'url': 'https://api.finicity.com/aggregation/v1/customers/1006445022/accounts/1019548601/statement',
+            'url': `https://api.finicity.com/aggregation/v1/customers/${req.body.data.customerId}/accounts/${req.body.data.accountId}/statement`,
             'headers': {
-              'Finicity-App-Token': 'TXTlqsSCGradtFJdjNMp',
+              'Finicity-App-Token': req.body.data.token,
               'Finicity-App-Key': '8b400cba91ffa2f1c4b28a11ee02231e',
               'Accept': 'application/pdf, application/json',
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({"index":3}),
+            body: JSON.stringify({"index":1}),
             encoding: null
           
           };
           request(options, function (error, response) { 
             if (error) throw new Error(error);
             console.log(typeof response.body);
-            fs.writeFileSync("./my.txt", response.body, "binary");
-            fs.writeFileSync("./my2.pdf", response.body, "binary");
+            //fs.writeFileSync("./my.txt", response.body, "binary");
+            fs.writeFileSync("./my.pdf", response.body, "binary");
           });
 
         // const options = {
