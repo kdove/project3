@@ -1,20 +1,38 @@
-import React, { memo, useState, useEffect, useCallback } from "react";
-import AOS from "aos/dist/aos";
+import React, { memo, useState, useEffect, useCallback, lazy } from "react";
 import { Link, Redirect } from 'react-router-dom';
-import { signout } from './Logged_out/helpers/auth';
+
+//
+import AOS from "aos/dist/aos";
+import "aos/dist/aos.css";
+
+
+import { signout } from './Services/auth';
+
+//ALERTS
 import { ToastContainer, toast } from 'react-toastify';
+
 import api from "./api";
+
+//IMPORTING WEBSITE COMPONENTS
 import NavBar from "./Logged_out/Components/Navigation/NavBar";
 import Footer from "./Logged_out/Components/Footer/Footer";
-import "aos/dist/aos.css";
-import registerServiceWorker from "./registerServiceWorker";
 import CookieRules from "./Logged_out/Components/Cookies/CookieRules";
 import CookieConsent from "./Logged_out/Components/Cookies/CookieConsent";
 import dummyBlogPosts from "./Logged_out/Components/dummy_data/blogPosts";
-//import DialogSelector from "./Components/Register_Login/DialogSelector";
-import Routing from "./Logged_out/Routes/Routing";
+//import TermsOfService from "./Logged_out/Components/Register_Login/TermsOfService";
+
+//IMPORT SHARED COMPONENTS
 import smoothScrollTop from "./Shared/Functions/smoothScrollTop";
-import TermsOfService from "./Logged_out/Components/Register_Login/TermsOfService";
+
+//import DialogSelector from "./Components/Register_Login/DialogSelector";
+
+
+//IMPORT BLOG ROUTES
+import Routing from "./Logged_out/Routes/Routing";
+
+
+//IMPORT SERVICE WORKER
+import registerServiceWorker from "./registerServiceWorker";
 
 AOS.init({ once: true });
 
@@ -25,6 +43,8 @@ function App(props) {
   const [blogPosts, setBlogPosts] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(null);
   const [isCookieRulesOpen, setIsCookieRulesOpen] = useState(false);
+
+  // Webpage tab
   const selectHome = useCallback(() => {
     smoothScrollTop();
     document.title =
@@ -50,11 +70,14 @@ function App(props) {
   const handleMobileDrawerClose = useCallback(() => {
     setIsMobileDrawerOpen(false);
   }, [setIsMobileDrawerOpen]);
+
+  //Blog Webpage Tab
   const selectBlog = useCallback(() => {
     smoothScrollTop();
     document.title = "Circa - Blog";
     setSelectedTab("Blog");
   }, [setSelectedTab]);
+
   const fetchBlogPosts = useCallback(() => {
     const blogPosts = dummyBlogPosts.map((blogPost) => {
       let title = blogPost.title;

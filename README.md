@@ -90,12 +90,15 @@ In the next section, we will focus on the frontend part with React to build our 
 * Mongoose — is an ODM framework for MongoDB used to connect/interact with MongoDB
 * Node — is an open-source, cross-platform JavaScript run-time environment that executes JavaScript code outside of a browser
 * Morgan
-* Redux
-* Morgan
+* Redux — for state management for our React components
+* Passport — used to authenticate requests, which it does through an extensible set of plugins known as strategies
+* Passport-jwt — passport strategy for authenticating with a JSON Web Token (JWT); lets you authenticate endpoints using a JWT
+* Validator — used to validate inputs (e.g. check for valid email format, confirming passwords match)
 * Nodemon — automatically restarts the server whenever the code changes
 * Express — is a web application framework for NodeJS
 * Axios — will be used to send requests to server to fetch or insert data
-* Bcryptjs —  is a password hashing function
+* Bcryptjs — used to hash passwords before we store them in our database
+* Concurrently —allows us to run our backend and frontend concurrently and on different ports
 ---
 
 ## 🔮 Future work

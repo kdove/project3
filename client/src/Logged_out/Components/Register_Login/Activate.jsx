@@ -3,7 +3,7 @@ import authSvg from '../../assests/welcome.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import { authenticate, isAuth } from '../../helpers/auth';
+import { authenticate, isAuth } from '../../../Services/auth';
 import { Link, Redirect } from 'react-router-dom';
 
 const Activate = ({ match }) => {

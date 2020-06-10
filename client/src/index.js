@@ -1,10 +1,9 @@
-import React, { Fragment,  Suspense } from "react";
+import React, { Fragment,  Suspense,  lazy } from "react";
 import ReactDOM from "react-dom";
 import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
-import App from "./App";
 
-
+//ALERTS
 import 'react-toastify/dist/ReactToastify.css';
 
 // IMPORTING ALL LOGIN & REGISTRATION COMPONENTS
@@ -16,21 +15,29 @@ import Admin from './Logged_out/Components/Register_Login/Admin.jsx';
 import ForgetPassword from './Logged_out/Components/Register_Login/ForgotPassword.jsx';
 import ResetPassword from './Logged_out/Components/Register_Login/ResetPassword.jsx';
 
+//IMPORTING APP 
+import App from "./App";
+
+//import history from "history.js";
+
 //IMPORTING WEBSITE & BLOG
 import Blog from './Logged_out/Main'
 
 //USER ROLE ROUTES
-import PrivateRoute from './Logged_out/Routes/PrivateRoute';
-import AdminRoute from './Logged_out/Routes/AdminRoute';
+import PrivateRoute from './Routes/PrivateRoute';
+import AdminRoute from './Routes/AdminRoute';
 
 //
 import theme from "./theme";
 import GlobalStyles from "./GlobalStyles";
 
 
+const LoggedInComponent = lazy(() => import("./Logged_In/Main"));
+
+
 
 ReactDOM.render(
- <BrowserRouter>
+ <BrowserRouter  >
        <MuiThemeProvider theme={theme}>
          <CssBaseline />
          <GlobalStyles />
@@ -57,11 +64,17 @@ ReactDOM.render(
        <Route path='/users/activate/:token' exact render={props => <Activate {...props} />} />
        {/* Route to client portal */}
       <PrivateRoute path="/private" exact component={Private} />
-      {/* Route to Admin Protal */}
+      
+      {/* Route to Admin Portal */}
         <AdminRoute path="/admin" exact component={Admin} />
+
+      
+         <LoggedInComponent path="/c"  />
+    
 
         {/* Redirect */}
        <Redirect to='/' /> 
+       
      </Switch>
      </Suspense>
      </MuiThemeProvider>
