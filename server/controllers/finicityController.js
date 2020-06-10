@@ -5,6 +5,7 @@ const axios = require("axios");
 //I am at an impasse as to what best practice is to be used here, on one hand I am loading in an entire new library package
 //to do simple get requests, on the other hand, get requests through post requests are bad practice apparently.
 const request = require("request");
+const fs = require("fs");
 console.log(process.env.FINICITY_APP_KEY);
 
 
@@ -197,26 +198,69 @@ module.exports = {
     //requires authentication
     finicityGetAccountStatement: function(req, res) {
         console.log(req.body);
-        return axios({
-            method: "get",
-            url: `https://api.finicity.com/aggregation/v1/customers/${req.body.data.customerId}/accounts/${req.body.data.accountId}/statement`,
-            params: {
-                "index": 1
+        //loading our information to send in a request here
+        var options = {
+            'method': 'GET',
+            'url': 'https://api.finicity.com/aggregation/v1/customers/1006445022/accounts/1019548601/statement',
+            'headers': {
+              'Finicity-App-Token': 'TXTlqsSCGradtFJdjNMp',
+              'Finicity-App-Key': '8b400cba91ffa2f1c4b28a11ee02231e',
+              'Accept': 'application/pdf, application/json',
+              'Content-Type': 'application/json',
             },
-            //headers are:
-            //the finicity app token
-            //finicity app key
-            //accept
-            headers: {
-                "Finicity-App-Token": req.body.data.token,
-                "Finicity-App-Key": process.env.FINICITY_APP_KEY,
-                "Accept": "application/pdf, application/json"
-            },
-        }).catch(error => {
-            console.log(error);
-        }).then(response => {
-            res.json(response.data);
-        });
+            body: JSON.stringify({"index":3}),
+            encoding: null
+          
+          };
+          request(options, function (error, response) { 
+            if (error) throw new Error(error);
+            console.log(typeof response.body);
+            fs.writeFileSync("./my.txt", response.body, "binary");
+            fs.writeFileSync("./my2.pdf", response.body, "binary");
+          });
+
+        // const options = {
+        //     "method": "GET",
+        //     "url": `https://api.finicity.com/aggregation/v1/customers/${req.body.data.customerId}/accounts/${req.body.data.accountId}/statement`,
+        //     //headers are finicity app token, finicity app key, and accept
+        //     headers: {
+        //         "Finicity-App-Token": req.body.data.token,
+        //         "Finicity-App-Key": process.env.FINICITY_APP_KEY,
+        //         "Accept": "application/pdf, application/json"
+        //     },
+        //     body: JSON.stringify({
+        //         "index": 1
+        //     })
+        // };
+
+        // //our call request
+        // request(options, function(error, response) {
+        //     fs.writeFile("./my.pdf", response.body, "Binary", console.log);
+        //     //response.pipe(fs.createWriteStream("./my.pdf"))
+        //     //if(error) console.log(error);
+        // });
+
+        // console.log(req.body);
+        // return axios({
+        //     method: "get",
+        //     url: `https://api.finicity.com/aggregation/v1/customers/${req.body.data.customerId}/accounts/${req.body.data.accountId}/statement`,
+        //     params: {
+        //         "index": 1
+        //     },
+        //     //headers are:
+        //     //the finicity app token
+        //     //finicity app key
+        //     //accept
+        //     headers: {
+        //         "Finicity-App-Token": req.body.data.token,
+        //         "Finicity-App-Key": process.env.FINICITY_APP_KEY,
+        //         "Accept": "application/pdf, application/json"
+        //     },
+        // }).catch(error => {
+        //     console.log(error);
+        // }).then(response => {
+        //     res.json(response.data);
+        // });
     },
 
     //this function will return an array with all active customers on finicity's database

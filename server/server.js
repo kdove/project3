@@ -23,6 +23,7 @@ app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
+//Console logs active web link
 app.listen(PORT, () => {
-    console.log(`🌎 ==> API server now on port ${PORT}!`);
+    console.log(`🌎 ==> API server now on port http://localhost:${PORT}!`);
 });
