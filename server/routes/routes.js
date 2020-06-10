@@ -1,4 +1,5 @@
 const router = require("express").Router();
+
 const finicityController = require("../controllers/finicityController");
 
 /*
