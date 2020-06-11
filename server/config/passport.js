@@ -1,7 +1,14 @@
+const JwtStrategy = require("passport-jwt").Strategy;
+const ExtractJwt = require("passport-jwt").ExtractJwt;
+const mongoose = require("mongoose");
+const User = mongoose.model("Users");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy
 
 const db = require("../models/User");
+
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+
 
 passport.use(
     new LocalStrategy(
@@ -46,6 +53,28 @@ passport.serializeUser(function(user, cb) {
 passport.deserializeUser(function(obj, cb) {
     cb(null, obj);
 });
+
+
+// Google Strategy
+passport.use(new GoogleStrategy({
+    clientID: keys.GOOGLE.clientID,
+    clientSecret: keys.GOOGLE.clientSecret,
+    callbackURL: "/auth/google/callback"
+},
+(accessToken, refreshToken, profile, cb) => {
+    console.log(chalk.blue(JSON.stringify(profile)));
+    user = { ...profile };
+    return cb(null, profile);
+}));
+
+app.get("/auth/google", passport.authenticate("google", {
+    scope: ["profile", "email"]
+}));
+app.get("/auth/google/callback",
+    passport.authenticate("google"),
+        (req, res) => {
+            res.redirect("/profile");
+        });
 
 //export the passport
 module.exports = passport;

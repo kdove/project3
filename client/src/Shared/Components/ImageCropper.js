@@ -2,7 +2,7 @@ import React, { useRef, useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
 import Cropper from "react-cropper";
 import { withStyles } from "@material-ui/core";
-import shadeColor from "../functions/shadeColor";
+import shadeColor from "../Functions/shadeColor";
 
 const styles = {
   cropperWrapper: {
