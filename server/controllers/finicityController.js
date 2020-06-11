@@ -208,7 +208,7 @@ module.exports = {
               'Accept': 'application/pdf, application/json',
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({"index":1}),
+            body: JSON.stringify({"index":req.body.data.index}),
             encoding: null
           
           };
