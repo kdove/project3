@@ -14,12 +14,10 @@ app.use(express.urlencoded({ extended: true }));
 //PARSE REQUEST BODY AS JSON
 app.use(express.json());
 
-
 // Load routes
 const routes = require("./routes/routes");
 //const authRouter = require('./routes/auth.route')
 //const userRouter = require('./routes/user.route')
-
 
 // Define API routes here
 app.use(routes);
@@ -38,6 +36,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
   // Send every other request to the React app
 // Define any API routes before this runs
+
   app.use((req, res) =>
     res.sendFile(path.join(__dirname, "../client/build/index.html"))
   );
@@ -49,3 +48,4 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/circaauth");
 app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port http://localhost:${PORT}!`);
 });
+
