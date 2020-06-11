@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import authSvg from '../../assests/update.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import { updateUser, isAuth, getCookie, signout } from '../../helpers/auth';
+import { updateUser, isAuth, getCookie, signout } from '../../../Services/auth';
 import { Link, Redirect } from 'react-router-dom';
 
 const Admin = ({ history }) => {

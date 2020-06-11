@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true,
         required: "Users must have an email address"
+
     },
     //client's full name
     name: {
