@@ -75,27 +75,6 @@ router.get('/messenger_auth', function(req, res) {
     res.send(req.query["hub.challenge"]);
 });
 
-router.post('/Services/IS866b263b93e34e71b59ac47d7d157d22/Channels/CHd761524f39414deea19af42bd9fe38e0/Webhooks/', (req, res) => {
-    // Download the helper library from https://www.twilio.com/docs/node/install
-    // Your Account Sid and Auth Token from twilio.com/console
-    // DANGER! This is insecure. See http://twil.io/secure
-    // const accountSid = 'AC017b5d048e9a72d7e9010a8d1a07744a';
-    // const authToken = '546d651ef2b5d9d1b3e808c04e3ec1a7';
-    // const client = require('twilio')(accountSid, authToken);
 
-    // client.chat.services('IS866b263b93e34e71b59ac47d7d157d22')
-    //     .channels('CHd761524f39414deea19af42bd9fe38e0')
-    //     .webhooks
-    //     .create({
-    //         'configuration.filters': ['onMessageSent'],
-    //         'configuration.method': 'POST',
-    //         'configuration.url': '{https://channels.autopilot.twilio.com/v1/AC017b5d048e9a72d7e9010a8d1a07744a/UAe7bf7d669578ebfa46638da9d424f733/twilio-chat}',
-    //         type: 'webhook'
-    //     })
-    //     .then(webhook => console.log(webhook.sid));
-
-
-
-});
 
 module.exports = router;
