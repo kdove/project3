@@ -14,7 +14,6 @@ if (process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"));
 }
 
-db.init();
 
 // Define API routes here
 app.use(routes);
